@@ -130,10 +130,25 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   void resetTimer() {
-    _timer?.cancel();
     setState(() {
       currentTime = timerDuration;
     });
+
+    if (_isRunning) {
+      _timer?.cancel();
+      _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
+        if (currentTime > 0) {
+          setState(() {
+            currentTime--;
+          });
+        } else {
+          timer.cancel();
+          setState(() {
+            _isRunning = false;
+          });
+        }
+      });
+    }
   }
 
   void stopTimer() {
