@@ -162,8 +162,10 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: widget.isDarkMode ? Colors.black : Colors.white,
       appBar: AppBar(
-        title: Text(widget.title),
+        backgroundColor: widget.isDarkMode ? Colors.black : const Color(0xFFe70104),
+        elevation: 0,
         actions: [
           IconButton(
             onPressed: () {
@@ -189,10 +191,7 @@ class _MyHomePageState extends State<MyHomePage> {
             icon: const Icon(Icons.diversity_3, color: Colors.white),
           ),
         ],
-      ),
-      body: Center(
-        // Ensures the timer is perfectly centered
-        child: GestureDetector(
+        flexibleSpace: GestureDetector(
           onTap: () {
             if (!_isRunning) {
               startTimer();
@@ -203,20 +202,40 @@ class _MyHomePageState extends State<MyHomePage> {
           onLongPress: () {
             stopTimer();
           },
-          child: _rotationHandler.buildRotatingTimer(
-            Container(
-              width: double.infinity,
-              height: double.infinity,
-              color: Colors.transparent,
-              alignment: Alignment.center,
-              child: Text(
-                currentTime.toString(),
-                style: TextStyle(
-                  fontSize: 48,
-                  color:
-                      widget.isDarkMode
-                          ? Colors.white
-                          : Colors.black, // Dynamic text color
+          child: Container(
+            color: Colors.transparent,
+          ),
+        ),
+      ),
+      body: SafeArea(
+        child: Center(
+          // Ensures the timer is perfectly centered
+          child: GestureDetector(
+            onTap: () {
+              if (!_isRunning) {
+                startTimer();
+              } else {
+                resetTimer();
+              }
+            },
+            onLongPress: () {
+              stopTimer();
+            },
+            child: _rotationHandler.buildRotatingTimer(
+              Container(
+                width: double.infinity,
+                height: double.infinity,
+                color: Colors.transparent,
+                alignment: Alignment.center,
+                child: Text(
+                  currentTime.toString(),
+                  style: TextStyle(
+                    fontSize: 48,
+                    color:
+                        widget.isDarkMode
+                            ? Colors.white
+                            : Colors.black, // Dynamic text color
+                  ),
                 ),
               ),
             ),

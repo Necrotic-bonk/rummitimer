@@ -379,27 +379,47 @@ class _PlayerScreenState extends State<PlayerScreen> {
                       borderRadius: BorderRadius.circular(8.0),
                       border: Border.all(color: widget.isDarkMode ? Colors.white : Colors.black),
                     ),
-                    child: DropdownButton<String>(
-                      value: 'English',
-                      style: TextStyle(color: textColor),
-                      underline: const SizedBox(),
-                      items: const [
-                        DropdownMenuItem(
-                          value: 'English',
-                          child: Text('English'),
+                    child: Theme(
+                      data: Theme.of(context).copyWith(
+                        popupMenuTheme: PopupMenuThemeData(
+                          color: widget.isDarkMode ? Colors.grey[800] : Colors.grey[200],
                         ),
-                        DropdownMenuItem(
-                          value: 'Polish',
-                          child: Text('Polish'),
+                        menuTheme: MenuThemeData(
+                          style: MenuStyle(
+                            backgroundColor: MaterialStatePropertyAll(widget.isDarkMode ? Colors.grey[800] : Colors.grey[200]),
+                            shape: MaterialStatePropertyAll(
+                              RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(12.0),
+                              ),
+                            ),
+                          ),
                         ),
-                        DropdownMenuItem(
-                          value: 'German',
-                          child: Text('German'),
-                        ),
-                      ],
-                      onChanged: (String? newValue) {
-                        // Will be implemented later
-                      },
+                      ),
+                      child: DropdownButton<String>(
+                        value: 'English',
+                        style: TextStyle(color: textColor),
+                        dropdownColor: widget.isDarkMode ? Colors.grey[800] : Colors.grey[200],
+                        icon: Icon(Icons.arrow_drop_down, color: textColor),
+                        underline: const SizedBox(),
+                        borderRadius: BorderRadius.circular(12.0),
+                        items: [
+                          DropdownMenuItem(
+                            value: 'English',
+                            child: Text('English', style: TextStyle(color: textColor)),
+                          ),
+                          DropdownMenuItem(
+                            value: 'Polish',
+                            child: Text('Polish', style: TextStyle(color: textColor)),
+                          ),
+                          DropdownMenuItem(
+                            value: 'German',
+                            child: Text('German', style: TextStyle(color: textColor)),
+                          ),
+                        ],
+                        onChanged: (String? newValue) {
+                          // Will be implemented later
+                        },
+                      ),
                     ),
                   ),
                 ],
