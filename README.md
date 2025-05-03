@@ -1,16 +1,60 @@
-# rummitimer
+# Rummikub Timer
 
-A new Flutter project.
+A modern, user-friendly timer app designed specifically for Rummikub games. Built with Flutter, this app helps manage player turns and timing during gameplay.
 
-## Getting Started
+## Features
 
-This project is a starting point for a Flutter application.
+- **Player Management**
+  - Support for 2-4 players
+  - Customizable seating arrangements
+  - Visual player rotation system
 
-A few resources to get you started if this is your first Flutter project:
+- **Timer Controls**
+  - Customizable timer duration
+  - Tap to start/reset timer
+  - Long press to stop timer
+  - Tap anywhere on the screen or title bar to control timer
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+- **Theme Support**
+  - Dark mode
+  - Light mode
+  - Rummikub-themed colors
+  - Persistent theme preference
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+- **Language Support**
+  - English
+  - Polish
+  - German
+
+## Usage
+
+1. **Starting the Timer**
+   - Tap anywhere on the screen to start the timer
+   - Tap again to reset the timer
+   - Long press to stop the timer
+
+2. **Changing Settings**
+   - Tap the players icon in the top right to access settings
+   - Adjust number of players
+   - Set timer duration
+   - Choose seating arrangement
+   - Toggle dark/light mode
+   - Select language
+
+3. **Player Rotation**
+   - The timer automatically rotates to the next player when time runs out
+   - Visual indication of current player's turn
+
+## Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request.
+
+## License
+
+This project is licensed under the MIT License - see the LICENSE file for details.
+
+## Acknowledgments
+
+- Built with Flutter
+- Inspired by the TTL Rummikub timer
+- Special thanks to all contributors and testers
