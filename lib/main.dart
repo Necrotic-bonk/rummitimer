@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'dart:async';
 import 'dart:math';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:rummitimer/player_dialog.dart'; // Ensure correct import for showPlayerDialog
+import 'package:rummitimer/player_screen.dart';
 
 void main() {
   runApp(MyApp());
@@ -63,8 +63,8 @@ class _MyAppState extends State<MyApp> {
       theme = ThemeData(
         scaffoldBackgroundColor: Colors.white, // Light mode background
         appBarTheme: const AppBarTheme(
-          backgroundColor: Colors.blue, // Light mode AppBar color
-          titleTextStyle: TextStyle(color: Colors.black, fontSize: 20),
+          backgroundColor: Color(0xFFe70104), // Light mode AppBar color
+          titleTextStyle: TextStyle(color: Colors.white, fontSize: 20),
         ),
         textTheme: const TextTheme(
           bodyMedium: TextStyle(color: Colors.black), // Black text
@@ -159,29 +159,6 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
-  void showSettingsDialog(
-    BuildContext context,
-    bool isDarkMode,
-    Function(bool) onThemeChanged,
-  ) {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return _SettingsDialog(
-          isDarkMode: isDarkMode,
-          onThemeChanged: onThemeChanged,
-          initialTimerDuration: timerDuration,
-          onTimerDurationChanged: (newDuration) {
-            setState(() {
-              timerDuration = newDuration;
-              currentTime = newDuration;
-            });
-          },
-        );
-      },
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -190,31 +167,26 @@ class _MyHomePageState extends State<MyHomePage> {
         actions: [
           IconButton(
             onPressed: () {
-              showPlayerDialog(
+              showPlayerScreen(
                 context: context,
-                isDarkMode:
-                    widget
-                        .isDarkMode, // Pass the isDarkMode from the parent widget
-                onPlayersSelected: (players) {
+                isDarkMode: widget.isDarkMode,
+                onPlayersAndPresetSelected: (players, preset) {
                   setState(() {
-                    numberOfPlayers =
-                        players; // Update the number of players in the state
+                    numberOfPlayers = players;
                     _rotationHandler.updateNumberOfPlayers(players);
                   });
                 },
+                initialTimerDuration: timerDuration,
+                onTimerDurationChanged: (newDuration) {
+                  setState(() {
+                    timerDuration = newDuration;
+                    currentTime = newDuration;
+                  });
+                },
+                onThemeChanged: widget.onThemeChanged,
               );
             },
             icon: const Icon(Icons.diversity_3, color: Colors.white),
-          ),
-          IconButton(
-            onPressed: () {
-              showSettingsDialog(
-                context,
-                widget.isDarkMode,
-                widget.onThemeChanged,
-              );
-            },
-            icon: const Icon(Icons.settings, color: Colors.white),
           ),
         ],
       ),
@@ -251,124 +223,6 @@ class _MyHomePageState extends State<MyHomePage> {
           ),
         ),
       ),
-    );
-  }
-}
-
-class _SettingsDialog extends StatefulWidget {
-  final bool isDarkMode;
-  final Function(bool) onThemeChanged;
-  final int initialTimerDuration;
-  final Function(int) onTimerDurationChanged;
-
-  const _SettingsDialog({
-    required this.isDarkMode,
-    required this.onThemeChanged,
-    required this.initialTimerDuration,
-    required this.onTimerDurationChanged,
-    Key? key,
-  }) : super(key: key);
-
-  @override
-  State<_SettingsDialog> createState() => _SettingsDialogState();
-}
-
-class _SettingsDialogState extends State<_SettingsDialog> {
-  late bool _isDarkMode;
-  late TextEditingController _timeController;
-
-  @override
-  void initState() {
-    super.initState();
-    _isDarkMode = widget.isDarkMode;
-    _timeController = TextEditingController(
-      text: widget.initialTimerDuration.toString(),
-    );
-  }
-
-  @override
-  void dispose() {
-    _timeController.dispose();
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    final bool isDark = _isDarkMode;
-
-    final Color textColor = isDark ? Colors.white : Colors.black;
-    final Color bgColor = isDark ? Colors.grey[900]! : Colors.white;
-    final Color fieldBg = isDark ? Colors.grey[800]! : Colors.grey[300]!;
-    final Color borderColor = isDark ? Colors.white : Colors.black;
-    final Color hintTextColor = isDark ? Colors.grey : Colors.black54;
-
-    return AlertDialog(
-      backgroundColor: bgColor,
-      title: Text('Settings', style: TextStyle(color: textColor)),
-      content: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text('Dark Mode', style: TextStyle(color: textColor)),
-              Switch(
-                value: _isDarkMode,
-                onChanged: (value) {
-                  setState(() {
-                    _isDarkMode = value;
-                  });
-                  widget.onThemeChanged(value);
-                },
-              ),
-            ],
-          ),
-          const SizedBox(height: 16),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text('Time:', style: TextStyle(color: textColor)),
-              SizedBox(
-                height: 36.0,
-                width: 60.0,
-                child: Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                  decoration: BoxDecoration(
-                    color: fieldBg,
-                    borderRadius: BorderRadius.circular(8.0),
-                    border: Border.all(color: borderColor),
-                  ),
-                  child: TextField(
-                    controller: _timeController,
-                    style: TextStyle(color: textColor),
-                    textAlign: TextAlign.center,
-                    keyboardType: TextInputType.number,
-                    decoration: InputDecoration(
-                      border: InputBorder.none,
-                      hintText: '40',
-                      hintStyle: TextStyle(color: hintTextColor),
-                    ),
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ],
-      ),
-      actions: [
-        TextButton(
-          onPressed: () {
-            final parsed = int.tryParse(_timeController.text.trim());
-            if (parsed != null) {
-              widget.onTimerDurationChanged(
-                parsed,
-              ); // Pass the new duration to the parent
-            }
-            Navigator.of(context).pop();
-          },
-          child: Text('Close', style: TextStyle(color: textColor)),
-        ),
-      ],
     );
   }
 }
@@ -418,5 +272,138 @@ class PlayerRotationHandler {
 
   void stopRotationTimer() {
     _timer?.cancel();
+  }
+}
+
+class RotatingTimer extends StatefulWidget {
+  final int initialNumberOfPlayers;
+
+  const RotatingTimer({Key? key, required this.initialNumberOfPlayers})
+      : super(key: key);
+
+  @override
+  _RotatingTimerState createState() => _RotatingTimerState();
+}
+
+class _RotatingTimerState extends State<RotatingTimer> {
+  int _currentPlayerIndex = 0;
+  int _currentTime = 40;
+  bool _isRunning = false;
+  Timer? _timer;
+  double _rotationAngle = 0.0;
+  late int numberOfPlayers;
+
+  @override
+  void initState() {
+    super.initState();
+    numberOfPlayers = widget.initialNumberOfPlayers;
+  }
+
+  List<String> get players => List.generate(numberOfPlayers, (index) => 'Player ${index + 1}');
+
+  void startTimer() {
+    if (_isRunning) return;
+
+    setState(() {
+      _isRunning = true;
+    });
+
+    _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
+      if (_currentTime > 0) {
+        setState(() {
+          _currentTime--;
+        });
+      } else {
+        _rotateToNextPlayer();
+      }
+    });
+  }
+
+  void resetTimer() {
+    _timer?.cancel();
+    setState(() {
+      _currentTime = 40;
+      _isRunning = false;
+    });
+  }
+
+  void _rotateToNextPlayer() {
+    setState(() {
+      _currentPlayerIndex = (_currentPlayerIndex + 1) % numberOfPlayers;
+      _rotationAngle += 90.0;
+      if (_rotationAngle >= 360) {
+        _rotationAngle = 0;
+      }
+      _currentTime = 40;
+    });
+  }
+
+  Widget _buildRotatingTimer() {
+    return Transform.rotate(
+      angle: _rotationAngle * (pi / 180),
+      child: Container(
+        padding: const EdgeInsets.all(20.0),
+        decoration: const BoxDecoration(
+          shape: BoxShape.circle,
+          color: Color(0xFFe70104),
+        ),
+        child: Center(
+          child: Text(
+            '$_currentTime',
+            style: const TextStyle(fontSize: 48, color: Colors.white),
+          ),
+        ),
+      ),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final isDarkMode = Theme.of(context).brightness == Brightness.dark;
+
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Rotating Timer'),
+        actions: [
+          IconButton(icon: const Icon(Icons.refresh), onPressed: resetTimer),
+          IconButton(
+            icon: const Icon(Icons.settings),
+            onPressed: () {
+              showPlayerScreen(
+                context: context,
+                isDarkMode: isDarkMode,
+                onPlayersAndPresetSelected: (selected, preset) {
+                  setState(() {
+                    numberOfPlayers = selected;
+                  });
+                },
+                initialTimerDuration: _currentTime,
+                onTimerDurationChanged: (newDuration) {
+                  setState(() {
+                    _currentTime = newDuration;
+                  });
+                },
+                onThemeChanged: (value) {
+                  // Since RotatingTimer doesn't have direct access to theme changes,
+                  // we'll just ignore this for now
+                },
+              );
+            },
+          ),
+        ],
+      ),
+      body: Center(
+        child: GestureDetector(
+          onTap: () {
+            if (!_isRunning) {
+              startTimer();
+            } else {
+              resetTimer();
+            }
+          },
+          child: _buildRotatingTimer(),
+        ),
+      ),
+    );
   }
 }
