@@ -306,29 +306,45 @@ class _PlayerScreenState extends State<PlayerScreen> {
                         borderRadius: BorderRadius.circular(12.0),
                         child: Padding(
                           padding: const EdgeInsets.all(16.0),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text(
-                                preset.name,
-                                style: TextStyle(
-                                  color: textColor,
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                              const SizedBox(height: 8),
-                              Text(
-                                preset.description,
-                                style: TextStyle(
-                                  color: textColor.withOpacity(0.7),
-                                  fontSize: 14,
-                                ),
-                                maxLines: 2,
-                                overflow: TextOverflow.ellipsis,
-                              ),
-                            ],
+                          child: Center(
+                            child: (
+                              preset.numberOfPlayers == 4 && (preset.name == 'Square' || preset.name == 'Rectangle')
+                            )
+                              ? Image.asset(
+                                  'assets/icons/${preset.name.toLowerCase()}-${widget.isDarkMode ? 'darkmode' : 'lightmode'}.png',
+                                  width: 144,
+                                  height: 144,
+                                )
+                              : (preset.numberOfPlayers == 3 && (preset.name == 'Y-Shape' || preset.name == 'Right Triangle'))
+                                ? Image.asset(
+                                    'assets/icons/${preset.name == 'Y-Shape' ? 'yshape' : 'triangle'}-${widget.isDarkMode ? 'darkmode' : 'lightmode'}.png',
+                                    width: 144,
+                                    height: 144,
+                                  )
+                                : Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Text(
+                                        preset.name,
+                                        style: TextStyle(
+                                          color: textColor,
+                                          fontSize: 18,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                      const SizedBox(height: 8),
+                                      Text(
+                                        preset.description,
+                                        style: TextStyle(
+                                          color: textColor.withOpacity(0.7),
+                                          fontSize: 14,
+                                        ),
+                                        maxLines: 2,
+                                        overflow: TextOverflow.ellipsis,
+                                      ),
+                                    ],
+                                  ),
                           ),
                         ),
                       ),
