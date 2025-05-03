@@ -164,7 +164,7 @@ class _MyHomePageState extends State<MyHomePage> {
     return Scaffold(
       backgroundColor: widget.isDarkMode ? Colors.black : Colors.white,
       appBar: AppBar(
-        backgroundColor: widget.isDarkMode ? Colors.black : const Color(0xFFe70104),
+        backgroundColor: widget.isDarkMode ? Colors.black : Colors.white,
         elevation: 0,
         actions: [
           IconButton(
@@ -188,7 +188,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 onThemeChanged: widget.onThemeChanged,
               );
             },
-            icon: const Icon(Icons.diversity_3, color: Colors.white),
+            icon: Icon(Icons.settings, color: widget.isDarkMode ? Colors.white : Colors.black),
           ),
         ],
         flexibleSpace: GestureDetector(
