@@ -1,60 +1,65 @@
-# Rummikub Timer
+# Rummikub Timer 🎲⏱️
 
 A modern, user-friendly timer app designed specifically for Rummikub games. Built with Flutter, this app helps manage player turns and timing during gameplay.
 
-## Features
+## Features ✨
 
-- **Player Management**
-  - Support for 2-4 players
-  - Customizable seating arrangements
-  - Visual player rotation system
+- **Player Management** 👥
 
-- **Timer Controls**
-  - Customizable timer duration
-  - Tap to start/reset timer
-  - Long press to stop timer
-  - Tap anywhere on the screen or title bar to control timer
+  - Support for 2-4 players 🎮
+  - Customizable seating arrangements 🪑
+  - Visual player rotation system 🔄
 
-- **Theme Support**
-  - Dark mode
-  - Light mode
-  - Rummikub-themed colors
-  - Persistent theme preference
+- **Timer Controls** ⏳
 
-- **Language Support**
-  - English
-  - Polish
-  - German
+  - Customizable timer duration ⏱️
+  - Tap to start/reset timer 🖱️
+  - Long press to stop timer ✋
+  - Tap anywhere on the screen or title bar to control timer 📱
 
-## Usage
+- **Theme Support** 🎨
 
-1. **Starting the Timer**
-   - Tap anywhere on the screen to start the timer
-   - Tap again to reset the timer
-   - Long press to stop the timer
+  - Dark mode 🌙
+  - Light mode ☀️
+  - Rummikub-themed colors 🟥🟦
+  - Persistent theme preference 💾
 
-2. **Changing Settings**
-   - Tap the players icon in the top right to access settings
-   - Adjust number of players
-   - Set timer duration
-   - Choose seating arrangement
-   - Toggle dark/light mode
-   - Select language
+- **Language Support** 🌍
+  - English 🇬🇧
+  - Polish 🇵🇱
+  - German 🇩🇪
 
-3. **Player Rotation**
-   - The timer automatically rotates to the next player when time runs out
-   - Visual indication of current player's turn
+## Usage 🚀
 
-## Contributing
+1. **Starting the Timer** ⏯️
 
-Contributions are welcome! Please feel free to submit a Pull Request.
+   - Tap anywhere on the screen to start the timer ▶️
+   - Tap again to reset the timer 🔄
+   - Long press to stop the timer ⏹️
 
-## License
+2. **Changing Settings** ⚙️
+
+   - Tap the cog icon in the top right to access settings 🛠️
+   - Adjust number of players 👥
+   - Set timer duration ⏱️
+   - Choose seating arrangement 🪑
+   - Toggle dark/light mode 🌙☀️
+   - Select language 🌍
+
+3. **Player Rotation** 🔄
+   - The timer automatically rotates to the next player when time runs out ⏳
+   - Visual indication of current player's turn 🎯
+
+## Contributing 🤝
+
+Contributions are welcome! Please feel free to submit a Pull Request. 🛠️
+
+## License 📜
 
 This project is licensed under the MIT License - see the LICENSE file for details.
 
-## Acknowledgments
+## Acknowledgments 🙏
 
-- Built with Flutter
-- Inspired by the TTL Rummikub timer
-- Special thanks to all contributors and testers
+- Built with Flutter 💙
+- Inspired by the TTL Rummikub timer 🎲
+- Special thanks to all contributors and testers 🌟
